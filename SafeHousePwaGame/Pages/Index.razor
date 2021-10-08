@@ -93,7 +93,8 @@
                                border-radius: @((this.Size * 0.1).ToString(CultureInfo.InvariantCulture))px;">@(challengeField.Number)</button>
             @if (challengeField.NumberComparer != NumberComparer.None)
             {
-                <button class="btn default-game-btn" disabled style="width: @(this.Size*0.6)px; height: @(this.Size*0.6)px; border-radius: @(this.Size*0.6)px; border: solid 1px; font-size: 3vw">@challengeField.NumberComparer.ToDisplayString()</button>
+                <button class="btn default-game-btn" disabled style="width: @((this.Size*0.6).ToString(CultureInfo.InvariantCulture))px; height: @((this.Size*0.6).ToString(CultureInfo.InvariantCulture))px;
+                                                                     border-radius: @((this.Size*0.6).ToString(CultureInfo.InvariantCulture))px; border: solid 1px; font-size: 3vw">@challengeField.NumberComparer.ToDisplayString()</button>
             }
             }
 
@@ -108,7 +109,8 @@
             {
 
                 <button class="btn default-game-btn" @onclick="(() => this.Game.HandleInput(button))"
-                        style="width: @(this.Size * 1.2)px; height: @(this.Size * 1.2)px; border: solid 1px; background: white; border-radius: @((this.Size * 0.1).ToString(CultureInfo.InvariantCulture))px;">@button.DisplayText</button>
+                        style="width: @((this.Size * 1.2).ToString(CultureInfo.InvariantCulture))px; height: @((this.Size * 1.2).ToString(CultureInfo.InvariantCulture))px;
+                               border: solid 1px; background: white; border-radius: @((this.Size * 0.1).ToString(CultureInfo.InvariantCulture))px;">@button.DisplayText</button>
             }
         </div>
     }
