@@ -134,7 +134,7 @@
                        <div class="horizontal-wrap" style="padding: 0 0; margin-bottom: 10vw;">
                        @foreach (var gameMode in this.Game.AvailableGameModes)
                        {
-                           <button class="btn default-game-btn interaction-btn" style="padding: 1vw 3vw; @(this.Game.GameMode == gameMode ? "background: yellow;" : "")"
+                           <button class="btn default-game-btn interaction-btn" style="padding: 1vw 3vw; @(this.Game.GameMode == gameMode ? $"background: {ChallengeFieldColor.Yellow.ToDisplayColor()};" : "")"
                                    @onclick="(() => this.Game.ChangeGameMode(gameMode))">@gameMode.ToString()</button>
                        }
                        </div>
