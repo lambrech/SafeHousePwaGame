@@ -98,7 +98,7 @@
             }
             }
 
-            <button class="btn default-game-btn" disabled style="width: @(this.Size)px; height: @(this.Size)px; border-radius: @(this.Size)px; border: solid 2px;@(challenge.IsCompleted ? "background-color: yellow;" : "")">@challenge.Score</button>
+            <button class="btn default-game-btn" disabled style="width: @(this.Size)px; height: @(this.Size)px; border-radius: @(this.Size)px; border: solid 2px;@(challenge.IsCompleted ? $"background-color: {ChallengeFieldColor.Yellow.ToDisplayColor()};" : "")">@challenge.Score</button>
         </div>
             }
 
