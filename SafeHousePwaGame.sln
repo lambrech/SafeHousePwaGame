@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeHousePwaGame", "SafeHousePwaGame\SafeHousePwaGame.csproj", "{BCEE201A-AF95-45AC-8F34-557194E6911C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A79118C1-6DF3-4152-B423-B928A99F9E9F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCEE201A-AF95-45AC-8F34-557194E6911C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCEE201A-AF95-45AC-8F34-557194E6911C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCEE201A-AF95-45AC-8F34-557194E6911C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCEE201A-AF95-45AC-8F34-557194E6911C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5877CFE1-CACB-4D82-BE3A-A29745701048}
+	EndGlobalSection
+EndGlobal

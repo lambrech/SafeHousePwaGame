@@ -1,0 +1,148 @@
+﻿@page "/"
+@using System.Globalization
+
+<style>
+    .vertical-wrap{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: stretch;
+        align-content: stretch;
+    }
+
+    .horizontal-wrap{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        align-content: stretch;
+    }
+
+    .default-game-btn {
+        padding: 0;
+        border: none;
+        font-weight: bold;
+        font-size: 4vw;
+        outline: none !important;
+        margin: 0.4vw;
+    }
+
+    .interaction-btn {
+        border: solid;
+        border-width: thin;
+        padding: 1vw;
+    }
+
+    .setting-btn {
+        margin: 2.5vw 8vw;
+    }
+
+    .number-btn-disabled {
+        background: #CCC;
+        opacity: 0.9;
+    }
+
+    .default-label {
+        font-size: 3vw;
+        margin: 1%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .score-container-label {
+        border: 2px solid;
+    }
+
+</style>
+
+@* ReSharper disable CssNotResolved *@
+<div class="vertical-wrap" style="height: 100%; width: 100%; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);">
+    
+    <div class="horizontal-wrap" style="padding: 0 0; margin: 2px 0;">
+        <button class="btn default-game-btn interaction-btn" @onclick="(() => this.Game.IncreaseKillerPosition())">Move Killer</button>
+        
+        @foreach (var joker in this.Game.Jokers)
+        {
+            <button class="btn default-game-btn interaction-btn" @onclick="joker.ToggleUsed"
+                    style="@(joker.IsUsed ? $"background-color: {ChallengeFieldColor.Red.ToDisplayColor()};" : "")">@joker.Name</button>
+        }
+    </div>
+
+    @foreach (var row in this.Game.GamePositionRows)
+    {
+        <div class="horizontal-wrap" style="padding: 0 0; margin: 2px 0;">
+            @foreach (var position in row)
+            {
+                <button class="btn default-game-btn" style="width: @(this.Size)px; height: @(this.Size)px; background: @(this.Game.CalcGamePositionColor(position)); border-radius: @((this.Size * 0.1).ToString(CultureInfo.InvariantCulture))px;">@position</button>
+            }
+        </div>
+    }
+
+    @foreach (var challenge in this.Game.Challenges)
+{
+        <div class="horizontal-wrap" style="padding: 0 0; margin: 2px 0; justify-content: flex-start">
+            @foreach (var challengeField in challenge.ChallengeFields)
+            {
+                
+                <button class="btn default-game-btn" disabled="@(!challengeField.IsEditable)" @onclick="() => this.Game.FocusChallengeField(challengeField)"
+                        style="width: @(this.Size)px; height: @(this.Size)px; background: @challengeField.Color.ToDisplayColor();
+                            border: @(this.Game.FocusedChallengeField == challengeField ? $"{(this.Size * 0.1).ToString(CultureInfo.InvariantCulture)}px solid;" : "none;")
+                               border-radius: @((this.Size * 0.1).ToString(CultureInfo.InvariantCulture))px;">@(challengeField.Number)</button>
+            @if (challengeField.NumberComparer != NumberComparer.None)
+            {
+                <button class="btn default-game-btn" disabled style="width: @(this.Size*0.6)px; height: @(this.Size*0.6)px; border-radius: @(this.Size*0.6)px; border: solid 1px; font-size: 3vw">@challengeField.NumberComparer.ToDisplayString()</button>
+            }
+            }
+
+            <button class="btn default-game-btn" disabled style="width: @(this.Size)px; height: @(this.Size)px; border-radius: @(this.Size)px; border: solid 2px;@(challenge.IsCompleted ? "background-color: yellow;" : "")">@challenge.Score</button>
+        </div>
+            }
+
+    @foreach (var row in this.Game.InputButtonRows)
+    {
+        <div class="horizontal-wrap" style="padding: 0 0; margin: 2px 0;">
+            @foreach (var button in row)
+            {
+
+                <button class="btn default-game-btn" @onclick="(() => this.Game.HandleInput(button))"
+                        style="width: @(this.Size * 1.2)px; height: @(this.Size * 1.2)px; border: solid 1px; background: white; border-radius: @((this.Size * 0.1).ToString(CultureInfo.InvariantCulture))px;">@button.DisplayText</button>
+            }
+        </div>
+    }
+    
+    <button class="btn default-game-btn interaction-btn" style="margin: 0 12vw;" @onclick="this.Game.OpenDialog">Game Settings</button>
+
+</div>
+
+
+@if (this.Game.ShowDialog)  
+{  
+   <div style="position: absolute; height: 100%; width: 100%; top: 0; left: 0; background: black; z-index: 10; opacity: 0.4"></div>
+
+   <div class="horizontal-wrap" style="position: absolute; height: 100%; width: 100%; top: 0; left: 0; justify-content: center;">
+       <div class="modal fade show d-block" style="max-width: 90%; position: unset; width: 70%; height: auto" tabindex="-1" role="dialog">  
+           <div class="modal-dialog" style="max-width: none" role="document">  
+               <div class="modal-content">  
+                   <div class="vertical-wrap" style="padding: 3%">
+                       <p style="text-align: center; margin-bottom: 0">Change Game Mode:</p>
+                       <p style="text-align: center; font-size: 2.5vw;">(change applies after reset)</p>
+                       <div class="horizontal-wrap" style="padding: 0 0; margin-bottom: 10vw;">
+                       @foreach (var gameMode in this.Game.AvailableGameModes)
+                       {
+                           <button class="btn default-game-btn interaction-btn" style="padding: 1vw 3vw; @(this.Game.GameMode == gameMode ? "background: yellow;" : "")"
+                                   @onclick="(() => this.Game.ChangeGameMode(gameMode))">@gameMode.ToString()</button>
+                       }
+                       </div>
+
+                       <button class="btn default-game-btn interaction-btn setting-btn" @onclick="this.Game.ResetGame">Reset Game</button>
+                       <button class="btn default-game-btn interaction-btn setting-btn" @onclick="this.Game.DecreaseKillerPosition">Move Killer back</button>
+                       <button class="btn default-game-btn interaction-btn setting-btn" @onclick="this.Game.CloseDialog">Close</button>
+                   </div>  
+               </div>  
+           </div>  
+       </div>  
+   </div>
+}
